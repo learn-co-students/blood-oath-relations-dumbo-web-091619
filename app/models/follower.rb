@@ -41,8 +41,8 @@ class Follower
   def join_cult(cult)
   # * `Follower#join_cult`
   #   * takes in an argument of a `Cult` instance and adds this follower to the cult's list of followers
-    if self.age <= cult.minimum_age
-      puts "Try again when you're 13 or older"
+    if self.age < cult.minimum_age
+      puts "Try again when you're older"
     else
       BloodOath.new(Time.now.to_s, self, cult)
     end
@@ -89,6 +89,8 @@ class Follower
 
 
   def fellow_cult_members
+
+    # This method is still a work in progress
   # * `Follower#fellow_cult_members`
   #   * returns a unique `Array` of followers who are in the same cults as you
     BloodOath.all.filter { |oath| self.cults.include? oath.cult and oath.follower != self }.map { |oath| oath.follower }.uniq

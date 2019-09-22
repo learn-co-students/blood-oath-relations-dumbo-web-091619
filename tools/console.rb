@@ -13,6 +13,7 @@ end
 a = Cult.new("Satanists", "def", "123", "Try harder")
 b = Cult.new("Hedonists", "fgh", "567", "Do more")
 c = Cult.new("Republicans", "jkl", "910", "Try more")
+x = Cult.new("Libertarians", "jkl", "910", "Try Try")
 
 # name, age, motto
 
@@ -34,7 +35,7 @@ n = BloodOath.new(Time.now.to_s, f, b)
 p = BloodOath.new(Time.now.to_s, d, b)
 q = BloodOath.new(Time.now.to_s, e, c)
 r = BloodOath.new(Time.now.to_s, g, c)
-s = BloodOath.new(Time.now.to_s, h, a)
+s = BloodOath.new(Time.now.to_s, h, x)
 t = BloodOath.new(Time.now.to_s, j, a)
 
 binding.pry
