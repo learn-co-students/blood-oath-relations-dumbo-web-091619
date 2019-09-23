@@ -5,8 +5,8 @@ def reload
 end
 
 
-caf=Cult.new("Caferiler", "Kars", 1054, "We are not joking...")
-nak=Cult.new("Naksiler", "Kars", 2001, "We are totally joking...")
+caf=Cult.new("Caferiler", "Kars", 1054, "We are not joking...", 16)
+nak=Cult.new("Naksiler", "Kars", 2001, "We are totally joking...", 18)
 rak=Cult.new("Raksiler", "Kars", 2003, "We are totally The King Among The Cults...")
 
 

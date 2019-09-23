@@ -33,7 +33,7 @@ class Follower
     end
 
     def join_cult(cult)
-        BloodOath.new(self, cult)
+        self.age > cult.minimum_age ? BloodOath.new(self, cult) : "Sorry, you are too young to participate this cult."
     end
 
     def life_motto
@@ -43,6 +43,11 @@ class Follower
     def self.top_ten
         Follower.all.sort_by{|follower|
         follower.cults.size}.slice(0,9)
+    end
+
+    def fellow_cult_members
+        mycults=self.cults
+        mycults.map{|cult| cult.followers}.uniq
     end
 
 end

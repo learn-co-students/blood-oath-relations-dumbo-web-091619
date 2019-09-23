@@ -1,13 +1,15 @@
+require 'pry'
 class Cult
-    attr_reader :name, :location, :founding_year, :slogan
+    attr_reader :name, :location, :founding_year, :slogan, :minimum_age
     attr_accessor :list_of_followers
     @@all = []
 
-    def initialize(name, location, founding_year, slogan)
+    def initialize(name, location, founding_year, slogan, minimum_age=21)
         @name = name
         @location = location
         @founding_year = founding_year
         @slogan = slogan
+        @minimum_age = minimum_age
         @@all << self
     end
 
@@ -28,7 +30,9 @@ class Cult
     end
 
     def self.most_common_location
-        #Cult.all.map{|cult| cult.location}.mode
+        locations = Cult.all.map{|cult| cult.location}
+        mostcommon=locations.map{|location| locations.count(location) }.max
+        locations.find{|location| locations.count(location) == mostcommon}
     end
 
     def recruit_follower(follower)
