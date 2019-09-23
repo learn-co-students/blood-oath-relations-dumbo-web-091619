@@ -77,4 +77,56 @@ class Cult
             cult.founding_year == founding_year_fixnum
         end
     end
+
+#       Advanced Methods
+#     * `Cult#average_age`
+#     * returns a `Float` that is the average age of this cult's followers
+#     * `Cult#my_followers_mottos`
+#     * prints out all of the mottos for this cult's followers
+#     * `Cult.least_popular`
+#     * returns the `Cult` instance who has the least number of followers :(
+#     * `Cult.most_common_location`
+#     * returns a `String` that is the location with the most cults
+
+    def oaths
+    #   helper file
+        BloodOath.all.select do |blood_oath|
+            blood_oath.cult == self
+        end
+    end
+
+    def average_age
+    #     * returns a `Float` that is the average age of this cult's followers
+        ages = self.oaths.map do |oath|
+            oath.follower.age
+        end 
+        ages.reduce(0){|sum, age| sum + age} / ages.length.to_f
+    end
+
+    def my_followers_mottos
+    #     * prints out all of the mottos for this cult's followers
+        self.oaths.map do |oath|
+            oath.follower.life_motto
+        end
+    end
+
+    def self.least_popular
+    #     * returns the `Cult` instance who has the least number of followers :(
+        cults = @@all.map do |cult|
+                [cult, cult.oaths.length]
+            end
+            cults_hash = Hash.new{|cults_hash, key| cults_hash[key] = []}
+            cults.each{ |key, value| cults_hash[key] << value}
+            cults_hash.key(cults_hash.values.min)
+    end
+
+    def self.most_common_location
+    #     * returns a `String` that is the location with the most cults
+        cults = @@all.map do |cult|
+            cult.location
+        end
+        cults_hash = cults.uniq.map{|cult_location| [cult_location, cults.count(cult_location)]}.to_h
+        cults_hash.key(cults_hash.values.max)
+    end
+
 end

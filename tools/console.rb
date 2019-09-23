@@ -11,7 +11,7 @@ end
 
 green_street_hooligans = Cult.new("The Hooligans of Green Street", "Green Street, duh", 1997, "We're just here to feel alive")
 crystal_people = Cult.new("The Crystal People", "LA, baby", 1997, "We're, like, extra special")
-big_tent = Cult.new("The People of the Big Tent", "Taos", 2001, "Wanna come sit in the tent?")
+big_tent = Cult.new("The People of the Big Tent", "LA, baby", 2001, "Wanna come sit in the tent?")
 
 jenna = Follower.new("Jenna (Rainbow) McKibbens", 27, "Be free!")
 indigo = Follower.new("Indigo McTavish", 34, "Take it easy, baby!")
@@ -20,17 +20,26 @@ ethan = Follower.new("Ethan F. Anderson", 28, "We just all gotta, like, find wha
 eleanor = Follower.new("Eleanor Smith-Jones", 33, "I see vibrations")
 tom = Follower.new("Tom Delonge", 44, "Aliens, man, aliens.")
 keith = Follower.new("Keith McKenzie", 37, "I will be ready when they arrive!")
+sylvia = Follower.new("Sylvia Hearthstone", 65, "Wavy.")
+crystal = Follower.new("Crystal Moonsong", 38, "Let's sing!")
+harriet = Follower.new("Harriet O'Leary", 84, "Speak up, dearie!")
+howard = Follower.new("Howard Featherstone", 87, "Harrumph")
 
-jenna_crystal_people = BloodOath.new("10-23-2106", crystal_people, jenna)
+
+
+jenna_crystal_people = BloodOath.new("2016-10-23", crystal_people, jenna)
 tom_big_tent = big_tent.recruit_follower(tom)
 tom_green_street_hooligans = tom.join_cult(green_street_hooligans)
 ethan_crystal_people = crystal_people.recruit_follower(ethan)
 indigo_crystal_people = indigo.join_cult(crystal_people)
-indigo_big_tent = BloodOath.new("01-01-2017", big_tent, indigo)
+indigo_big_tent = BloodOath.new("2017-01-01", big_tent, indigo)
 indigo_green_street_hooligans = green_street_hooligans.recruit_follower(indigo)
-eleanor_crystal_people = BloodOath.new("12-25-1996", crystal_people, eleanor)
+eleanor_crystal_people = BloodOath.new("1996-12-25", crystal_people, eleanor)
 keith_green_street_hooligans = keith.join_cult(green_street_hooligans)
-
+sylvia_crystal_people = sylvia.join_cult(crystal_people)
+crystal_crystal_people = crystal.join_cult(crystal_people)
+harriet_big_tent = harriet.join_cult(big_tent)
+harold_green_street_hooligans = harold.join_cult(green_street_hooligans)
 binding.pry
 
 Cult.all
@@ -120,5 +129,80 @@ Follower.of_a_certain_age(30)
 #  #<Follower:0x00007fd116135ee0 @age=33, @life_motto="I see vibrations", @name="Eleanor Smith-Jones">,
 #  #<Follower:0x00007fd116135e68 @age=44, @life_motto="Aliens, man, aliens.", @name="Tom Delonge">,
 #  #<Follower:0x00007fd116135df0 @age=37, @life_motto="I will be ready when they arrive!", @name="Keith McKenzie">]
+
+## advanced methods
+# changed big_tent.location to "LA, baby"
+
+indigo.my_cults_slogans
+# => ["We're, like, extra special", "Wanna come sit in the tent?", "We're just here to feel alive"]
+
+Follower.most_active
+# => #<Follower:0x00007fb6691279c0
+#  @age=34,
+#  @life_motto="Take it easy, baby!",
+#  @name="Indigo McTavish">
+
+Follower.top_ten
+# => [#<Follower:0x00007fbafea32850
+#   @age=34,
+#   @life_motto="Take it easy, baby!",
+#   @name="Indigo McTavish">,
+#  #<Follower:0x00007fbafea325f8
+#   @age=44,
+#   @life_motto="Aliens, man, aliens.",
+#   @name="Tom Delonge">,
+#  #<Follower:0x00007fbafea32508
+#   @age=65,
+#   @life_motto="Wavy.",
+#   @name="Sylvia Hearthstone">,
+#  #<Follower:0x00007fbafea32580
+#   @age=37,
+#   @life_motto="I will be ready when they arrive!",
+#   @name="Keith McKenzie">,
+#  #<Follower:0x00007fbafea32418
+#   @age=84,
+#   @life_motto="Speak up, dearie!",
+#   @name="Harriet O'Leary">,
+#  #<Follower:0x00007fbafea32490
+#   @age=38,
+#   @life_motto="Let's sing!",
+#   @name="Crystal Moonsong">,
+#  #<Follower:0x00007fbafea328c8
+#   @age=27,
+#   @life_motto="Be free!",
+#   @name="Jenna (Rainbow) McKibbens">,
+#  #<Follower:0x00007fbafea32670
+#   @age=33,
+#   @life_motto="I see vibrations",
+#   @name="Eleanor Smith-Jones">,
+#  #<Follower:0x00007fbafea32738
+#   @age=28,
+#   @life_motto="We just all gotta, like, find what works, you know man?",
+#   @name="Ethan F. Anderson">,
+#  #<Follower:0x00007fbafea327d8
+#   @age=32,
+#   @life_motto="No.",
+#   @name="Harold Gunderson">]
+# excluded howard, who is not in a cult :)
+
+
+crystal_people.average_age
+#=> 37.5
+
+big_tent.average_age
+# => 54.0
+
+crystal_people.my_followers_mottos
+# => ["Be free!", "We just all gotta, like, find what works, you know man?", "Take it easy, baby!", "I see vibrations", "Wavy.", "Let's sing!"]
+
+Cult.least_popular
+# => #<Cult:0x00007fb9a890ae70
+#  @founding_year=2001,
+#  @location="LA, baby",
+#  @name="The People of the Big Tent",
+#  @slogan="Wanna come sit in the tent?">
+
+Cult.most_common_location
+# => "LA, baby"
 
 puts "Mwahahaha!" # just in case pry is buggy and exits

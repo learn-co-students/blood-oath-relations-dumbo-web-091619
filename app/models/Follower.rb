@@ -57,4 +57,39 @@ class Follower
         end
     end
 
+
+    # Advanced Methods
+
+
+# * `Follower#my_cults_slogans`
+# * prints out all of the slogans for this follower's cults
+# * `Follower.most_active`
+# * returns the `Follower` instance who has joined the most cults
+# * `Follower.top_ten`
+# * returns an `Array` of followers; they are the ten most active followers
+
+    def my_cults_slogans
+        self.cults.map do |cult|
+            cult.slogan
+        end
+    end
+
+    def self.most_active
+        members = @@all.map do |member|
+            [member, member.cults.length]
+        end
+        members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
+        members.each{ |key, value| members_hash[key] << value}
+        members_hash.key(members_hash.values.max)
+    end
+
+    def self.top_ten
+        members = @@all.map do |member|
+            [member, member.cults.length]
+        end
+        members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
+        members.each{|key, value| members_hash[key]<< value}
+        top_ten_hash = members_hash.sort_by{|key, value| value}.reverse.to_h
+        top_ten_hash.keys.first(10)
+    end
 end
