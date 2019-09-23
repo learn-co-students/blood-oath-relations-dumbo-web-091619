@@ -89,8 +89,6 @@ class Follower
 
 
   def fellow_cult_members
-
-    # This method is still a work in progress
   # * `Follower#fellow_cult_members`
   #   * returns a unique `Array` of followers who are in the same cults as you
     BloodOath.all.filter { |oath| self.cults.include? oath.cult and oath.follower != self }.map { |oath| oath.follower }.uniq

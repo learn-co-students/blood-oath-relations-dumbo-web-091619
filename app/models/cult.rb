@@ -96,6 +96,7 @@ class Cult
 
 
   def self.most_common_location
+    # Still a work in progress
   # * `Cult.most_common_location`
   #   * returns a `String` that is the location with the most cults
     Cult.all.map { |cult| cult.location }.sort.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
