@@ -28,14 +28,15 @@
 require 'date'
 class Cult
 
-    attr_reader :name, :location, :founding_year, :slogan
+    attr_reader :name, :location, :founding_year, :slogan, :minimum_age
     @@all = []
 
-    def initialize(name, location, founding_year, slogan)
+    def initialize(name, location, founding_year, slogan, minimum_age = 18)
         @name = name
         @location = location
         @founding_year = founding_year
         @slogan = slogan
+        @minimum_age = minimum_age
         @@all << self
     end
 
@@ -43,10 +44,12 @@ class Cult
         @@all
     end
 
-    def recruit_follower(new_follower)
-    #   * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
-        BloodOath.new(Date.today.to_s, self, new_follower)
-    end
+    ## see updated recruit_follower method at bottom of page
+
+    # def recruit_follower(new_follower)
+    # #   * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
+    #     BloodOath.new(Date.today.to_s, self, new_follower)
+    # end
 
     def cult_population
     #   * returns a `Fixnum` that is the number of followers in this cult
@@ -129,4 +132,23 @@ class Cult
         cults_hash.key(cults_hash.values.max)
     end
 
+      ## Bonus Methods
+
+#     * `Cult#minimum_age`
+#     * returns a `Fixnum` that is the minimum age required for followers joining this cult
+#     * `Cult#recruit_follower`
+#     * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
+#     * NOW this is changed such that if the given `Follower` instance is not of age:
+#     * do not let them join the cult
+#     * print out a friendly message informing them that they are too young
+
+
+ def recruit_follower(new_follower)
+    #   * takes in an argument of a `Follower` instance and adds them to this cult's list of followers
+        if new_follower.age > @minimum_age
+            BloodOath.new(Date.today.to_s, self, new_follower)
+        else
+            p "I'm sorry, you are too young to join our community. Please come visit us again in #{@minimum_age - new_follower.age} year(s)!"
+        end
+    end
 end

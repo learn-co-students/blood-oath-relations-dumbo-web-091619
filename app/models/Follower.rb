@@ -33,10 +33,12 @@ class Follower
         @@all
     end
 
-    def join_cult(new_cult)
-        # follows single source of truth: many ~*~connecting~*~ to many via the dongle class
-        BloodOath.new(Date.today.to_s, new_cult, self)
-    end
+    ## see updated join_cult method at bottom of page
+
+    # def join_cult(new_cult)
+    #     # follows single source of truth: many ~*~connecting~*~ to many via the dongle class
+    #     BloodOath.new(Date.today.to_s, new_cult, self)
+    # end
 
     def cults
     #   * returns an `Array` of this follower's cults
@@ -74,22 +76,67 @@ class Follower
         end
     end
 
+    # def self.most_active
+    #     members = @@all.map do |member|
+    #         [member, member.cults.length]
+    #     end
+    #     members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
+    #     members.each{ |key, value| members_hash[key] << value}
+    #     members_hash.key(members_hash.values.max)
+    # end
+
+    # improved self.most_active :)
     def self.most_active
-        members = @@all.map do |member|
-            [member, member.cults.length]
-        end
-        members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
-        members.each{ |key, value| members_hash[key] << value}
-        members_hash.key(members_hash.values.max)
+        @@all.max_by{|member| member.cults.length}
     end
 
+    # def self.top_ten
+    #     members = @@all.map do |member|
+    #         [member, member.cults.length]
+    #     end
+    #     members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
+    #     members.each{|key, value| members_hash[key]<< value}
+    #     top_ten_hash = members_hash.sort_by{|key, value| value}.reverse.to_h
+    #     top_ten_hash.keys.first(10)
+    # end
+
+    # improved self.top_ten :)
     def self.top_ten
-        members = @@all.map do |member|
-            [member, member.cults.length]
+        members = @@all.sort_by{|member| member.cults.length}
+         members[-10..-1].reverse
+    end 
+
+#     * `Follower#fellow_cult_members`
+#   * returns a unique `Array` of followers who are in the same cults as you
+
+    def fellow_cult_members
+        my_cults_oaths = self.cults.map do |cult|
+            cult.oaths
         end
-        members_hash = Hash.new{|members_hash, key| members_hash[key] = []}
-        members.each{|key, value| members_hash[key]<< value}
-        top_ten_hash = members_hash.sort_by{|key, value| value}.reverse.to_h
-        top_ten_hash.keys.first(10)
+        flat_oaths = my_cults_oaths.flatten
+        fellow_followers = flat_oaths.map do |oath|
+            oath.follower
+        end
+        fellow_followers
     end
+
+      ## Bonus Methods
+
+#     * `Follower#join_cult`
+#     * takes in an argument of a `Cult` instance and adds this follower to the cult's list of followers
+#     * NOW this is changed such that if you don't meet the minimum age requirement of the given `Cult` instance:
+#     * do not let them join the cult
+#     * print out a friendly message informing them that they are too young
+
+
+    def join_cult(new_cult)
+        # follows single source of truth: many ~*~connecting~*~ to many via the dongle class
+        if @age > new_cult.minimum_age
+        BloodOath.new(Date.today.to_s, new_cult, self)
+        else 
+            p "I'm sorry, you are too young to join our community. Please come visit us again in #{new_cult.minimum_age - @age} year(s)!"
+        end
+    end
+
 end
+

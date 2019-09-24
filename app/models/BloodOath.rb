@@ -32,7 +32,7 @@ class BloodOath
         initiation_dates = all.map do |blood_oath|
             blood_oath.initiation_date
             end
-            parsed_dates = initiation_dates.min
+            initiation_dates.min
     end 
 
 end

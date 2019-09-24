@@ -11,7 +11,7 @@ end
 
 green_street_hooligans = Cult.new("The Hooligans of Green Street", "Green Street, duh", 1997, "We're just here to feel alive")
 crystal_people = Cult.new("The Crystal People", "LA, baby", 1997, "We're, like, extra special")
-big_tent = Cult.new("The People of the Big Tent", "LA, baby", 2001, "Wanna come sit in the tent?")
+big_tent = Cult.new("The People of the Big Tent", "LA, baby", 2001, "Wanna come sit in the tent?", 17)
 
 jenna = Follower.new("Jenna (Rainbow) McKibbens", 27, "Be free!")
 indigo = Follower.new("Indigo McTavish", 34, "Take it easy, baby!")
@@ -24,7 +24,8 @@ sylvia = Follower.new("Sylvia Hearthstone", 65, "Wavy.")
 crystal = Follower.new("Crystal Moonsong", 38, "Let's sing!")
 harriet = Follower.new("Harriet O'Leary", 84, "Speak up, dearie!")
 howard = Follower.new("Howard Featherstone", 87, "Harrumph")
-
+tabbie = Follower.new("Tabitha Burnes", 15, "I can't wait to see the great wide world!")
+buffy = Follower.new("Martha Mae Richards", 16, "If the apocalypse comes, beep me!")
 
 
 jenna_crystal_people = BloodOath.new("2016-10-23", crystal_people, jenna)
@@ -40,6 +41,8 @@ sylvia_crystal_people = sylvia.join_cult(crystal_people)
 crystal_crystal_people = crystal.join_cult(crystal_people)
 harriet_big_tent = harriet.join_cult(big_tent)
 harold_green_street_hooligans = harold.join_cult(green_street_hooligans)
+tabbie_crystal_people = crystal_people.recruit_follower(tabbie)
+buffy_big_tent = buffy.join_cult(big_tent)
 binding.pry
 
 Cult.all
@@ -130,8 +133,12 @@ Follower.of_a_certain_age(30)
 #  #<Follower:0x00007fd116135e68 @age=44, @life_motto="Aliens, man, aliens.", @name="Tom Delonge">,
 #  #<Follower:0x00007fd116135df0 @age=37, @life_motto="I will be ready when they arrive!", @name="Keith McKenzie">]
 
-## advanced methods
+######################
+## advanced methods ##
+######################
+
 # changed big_tent.location to "LA, baby"
+# added additional followers so followers.count > 10
 
 indigo.my_cults_slogans
 # => ["We're, like, extra special", "Wanna come sit in the tent?", "We're just here to feel alive"]
@@ -204,5 +211,40 @@ Cult.least_popular
 
 Cult.most_common_location
 # => "LA, baby"
+
+###################
+## Bonus Methods ##
+###################
+
+jenna.fellow_cult_members
+#=> [#<Follower:0x00007fc9ee1ad938 @age=27, @life_motto="Be free!", @name="Jenna (Rainbow) McKibbens">,
+ #<Follower:0x00007fc9ee1ad7d0 @age=28, @life_motto="We just all gotta, like, find what works, you know man?", @name="Ethan F. Anderson">,
+ #<Follower:0x00007fc9ee1ad8c0 @age=34, @life_motto="Take it easy, baby!", @name="Indigo McTavish">,
+ #<Follower:0x00007fc9ee1ad758 @age=33, @life_motto="I see vibrations", @name="Eleanor Smith-Jones">,
+ #<Follower:0x00007fc9ee1ad5f0 @age=65, @life_motto="Wavy.", @name="Sylvia Hearthstone">,
+ #<Follower:0x00007fc9ee1ad578 @age=38, @life_motto="Let's sing!", @name="Crystal Moonsong">]
+
+ crystal_people.minimum_age
+# => 18
+
+pry(main)> big_tent.minimum_age
+# => 17
+
+ tabbie_crystal_people
+# => "I'm sorry, you are too young to join our community. Please come visit us again in 3 years!"
+
+crystal_people.my_followers_mottos
+# => ["Be free!", "We just all gotta, like, find what works, you know man?", "Take it easy, baby!", "I see vibrations", "Wavy.", "Let's sing!"]
+# ^^ does not include tabbie.life_motto
+
+buffy_big_tent
+# => "I'm sorry, you are too young to join our community. Please come visit us again in 1 year(s)!"
+
+big_tent.minimum_age
+#=> 17
+
+big_tent.my_followers_mottos
+#=> ["Aliens, man, aliens.", "Take it easy, baby!", "Speak up, dearie!"]
+# ^^ does not include buffy.life_motto
 
 puts "Mwahahaha!" # just in case pry is buggy and exits
